@@ -39,7 +39,7 @@ public class AvailableBankAppsResponse {
 
     /**
      * Set bank name
-     * @param bankName
+     * @param bankName Name of bank
      */
     public void setBankName(String bankName) {
         this.bankName = bankName;
@@ -55,7 +55,7 @@ public class AvailableBankAppsResponse {
 
     /**
      * Set small logo url
-     * @param smallLogo
+     * @param smallLogo string url of small logo
      */
     public void setSmallLogo(String smallLogo) {
         this.smallLogo = smallLogo;
@@ -71,7 +71,7 @@ public class AvailableBankAppsResponse {
 
     /**
      * Set large logo url
-     * @param largeLogo
+     * @param largeLogo string url of large logo
      */
     public void setLargeLogo(String largeLogo) {
         this.largeLogo = largeLogo;

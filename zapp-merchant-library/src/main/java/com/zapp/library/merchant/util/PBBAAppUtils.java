@@ -28,9 +28,7 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.text.TextUtils;
-import android.util.Log;
 
-import com.zapp.library.merchant.BuildConfig;
 import com.zapp.library.merchant.ui.PBBAPopupCallback;
 import com.zapp.library.merchant.ui.fragment.PBBAPopup;
 import com.zapp.library.merchant.ui.fragment.PBBAPopupAboutFragment;
@@ -148,9 +146,6 @@ public final class PBBAAppUtils {
             throw new IllegalArgumentException("secureToken is required");
         }
         final String zappScheme = PBBALibraryUtils.getZappScheme(context);
-        if (BuildConfig.DEBUG) {
-            Log.d(PBBAAppUtils.class.getSimpleName(), "zappScheme is " + zappScheme);
-        }
         //noinspection ConstantConditions
         if (requestType == null) {
             throw new IllegalArgumentException("requestType is required");
@@ -159,7 +154,9 @@ public final class PBBAAppUtils {
         String uriString;
         if (requestType == RequestType.REQUEST_TO_PAY) {
             uriString = String.format(ZAPP_URI_FORMAT_STRING, PBBALibraryUtils.getZappScheme(context), secureToken);
-        } else {
+        }else if (requestType == RequestType.REQUEST_TO_LINK_AND_PAY){
+            uriString = String.format(ZAPP_URI_FORMAT_STRING_R4, ZAPP_SCHEME_R4, secureToken, RequestType.REQUEST_TO_PAY.getTypeOfRequest());
+        }else{
             uriString = String.format(ZAPP_URI_FORMAT_STRING_R4, ZAPP_SCHEME_R4, secureToken, requestType.getTypeOfRequest());
         }
 
@@ -202,6 +199,7 @@ public final class PBBAAppUtils {
      * @param secureToken The secure token for the payment.
      * @param brn         The BRN code for the payment.
      * @param callback    The callback listener for the popup. The popup keeps {@link java.lang.ref.WeakReference} to the callback.
+     * @param timeoutTS   Timeout value in milliseconds
      * @param requestType For pay {@link RequestType#REQUEST_TO_PAY} and for linking {@link RequestType#REQUEST_TO_LINK}
      * @see PBBAPopupCallback
      * @see #showPBBAErrorPopup(FragmentActivity, String, String, String, PBBAPopupCallback)

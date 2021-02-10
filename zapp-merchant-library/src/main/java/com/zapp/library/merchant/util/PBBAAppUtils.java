@@ -84,18 +84,15 @@ public final class PBBAAppUtils {
      * Checks if there is any Pay by Bank app enabled CFI App installed on the device.
      *
      * @param context     The context to use.
-     * @param requestType The request to pay. {@link RequestType}
+     * @param requestType Type of request. {@link RequestType}
      * @return True if there is at least one PBBA enabled CFI App available, false otherwise.
      * @see #openBankingApp(Context, String, RequestType)
      */
     public static boolean isCFIAppAvailable(@NonNull final Context context,@NonNull final RequestType requestType) {
-        
-
         //noinspection ConstantConditions
         if (context == null) {
             throw new IllegalArgumentException("context == null");
         }
-
 		//noinspection ConstantConditions
         if (requestType == null) {
             throw new IllegalArgumentException("requestType == null");
@@ -124,18 +121,17 @@ public final class PBBAAppUtils {
     }
 
     /**
-     * Open banking App for given context and secure token. Use this method if you do not use the Pay by Bank app Popup API (which takes care of the banking app
+     * Open banking App for given context,secure token and type of request. Use this method if you do not use the Pay by Bank app Popup API (which takes care of the banking app
      * opening).
      *
      * @param context     The (activity or application) context to start the banking App.
      * @param secureToken The secure token of the payment for which the banking App is to be started.
-     * @param requestType The request to pay. {@link RequestType}
+     * @param requestType The type of request. {@link RequestType}
      * @see #isCFIAppAvailable(Context)
      * @see #showPBBAPopup(FragmentActivity, String, String, PBBAPopupCallback,long,RequestType)
      * @see #showPBBAErrorPopup(FragmentActivity, String, String, String, PBBAPopupCallback)
      */
     public static void openBankingApp(@NonNull Context context, @NonNull final String secureToken, @NonNull final RequestType requestType) {
-
 
         //noinspection ConstantConditions
         if (context == null) {
@@ -200,7 +196,7 @@ public final class PBBAAppUtils {
      * @param brn         The BRN code for the payment.
      * @param callback    The callback listener for the popup. The popup keeps {@link java.lang.ref.WeakReference} to the callback.
      * @param timeoutTS   Timeout value in milliseconds
-     * @param requestType For pay {@link RequestType#REQUEST_TO_PAY} and for linking {@link RequestType#REQUEST_TO_LINK}
+     * @param requestType Request type for pay {@link RequestType#REQUEST_TO_PAY}, for Link and Pay {@link RequestType#REQUEST_TO_LINK_AND_PAY} and for linking {@link RequestType#REQUEST_TO_LINK}
      * @see PBBAPopupCallback
      * @see #showPBBAErrorPopup(FragmentActivity, String, String, String, PBBAPopupCallback)
      * @see #dismissPBBAPopup(FragmentActivity)

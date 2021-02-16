@@ -226,7 +226,7 @@ public class PBBAButton extends RelativeLayout implements LoaderManager.LoaderCa
     /**
      * Initializing Loader Manager while loading the PBBA Button
      *
-     * @param loaderManager
+     * @param loaderManager LoderManager instance to use
      */
     public void initLoaderManager(@NonNull final LoaderManager loaderManager) {
 

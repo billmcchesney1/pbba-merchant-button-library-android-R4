@@ -28,9 +28,7 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.text.TextUtils;
-import android.util.Log;
 
-import com.zapp.library.merchant.BuildConfig;
 import com.zapp.library.merchant.ui.PBBAPopupCallback;
 import com.zapp.library.merchant.ui.fragment.PBBAPopup;
 import com.zapp.library.merchant.ui.fragment.PBBAPopupAboutFragment;
@@ -86,18 +84,15 @@ public final class PBBAAppUtils {
      * Checks if there is any Pay by Bank app enabled CFI App installed on the device.
      *
      * @param context     The context to use.
-     * @param requestType The request to pay. {@link RequestType}
+     * @param requestType Type of request. {@link RequestType}
      * @return True if there is at least one PBBA enabled CFI App available, false otherwise.
      * @see #openBankingApp(Context, String, RequestType)
      */
     public static boolean isCFIAppAvailable(@NonNull final Context context,@NonNull final RequestType requestType) {
-        
-
         //noinspection ConstantConditions
         if (context == null) {
             throw new IllegalArgumentException("context == null");
         }
-
 		//noinspection ConstantConditions
         if (requestType == null) {
             throw new IllegalArgumentException("requestType == null");
@@ -126,18 +121,17 @@ public final class PBBAAppUtils {
     }
 
     /**
-     * Open banking App for given context and secure token. Use this method if you do not use the Pay by Bank app Popup API (which takes care of the banking app
+     * Open banking App for given context,secure token and type of request. Use this method if you do not use the Pay by Bank app Popup API (which takes care of the banking app
      * opening).
      *
      * @param context     The (activity or application) context to start the banking App.
      * @param secureToken The secure token of the payment for which the banking App is to be started.
-     * @param requestType The request to pay. {@link RequestType}
+     * @param requestType The type of request. {@link RequestType}
      * @see #isCFIAppAvailable(Context)
      * @see #showPBBAPopup(FragmentActivity, String, String, PBBAPopupCallback,long,RequestType)
      * @see #showPBBAErrorPopup(FragmentActivity, String, String, String, PBBAPopupCallback)
      */
     public static void openBankingApp(@NonNull Context context, @NonNull final String secureToken, @NonNull final RequestType requestType) {
-
 
         //noinspection ConstantConditions
         if (context == null) {
@@ -148,9 +142,6 @@ public final class PBBAAppUtils {
             throw new IllegalArgumentException("secureToken is required");
         }
         final String zappScheme = PBBALibraryUtils.getZappScheme(context);
-        if (BuildConfig.DEBUG) {
-            Log.d(PBBAAppUtils.class.getSimpleName(), "zappScheme is " + zappScheme);
-        }
         //noinspection ConstantConditions
         if (requestType == null) {
             throw new IllegalArgumentException("requestType is required");
@@ -159,7 +150,9 @@ public final class PBBAAppUtils {
         String uriString;
         if (requestType == RequestType.REQUEST_TO_PAY) {
             uriString = String.format(ZAPP_URI_FORMAT_STRING, PBBALibraryUtils.getZappScheme(context), secureToken);
-        } else {
+        }else if (requestType == RequestType.REQUEST_TO_LINK_AND_PAY){
+            uriString = String.format(ZAPP_URI_FORMAT_STRING_R4, ZAPP_SCHEME_R4, secureToken, RequestType.REQUEST_TO_PAY.getTypeOfRequest());
+        }else{
             uriString = String.format(ZAPP_URI_FORMAT_STRING_R4, ZAPP_SCHEME_R4, secureToken, requestType.getTypeOfRequest());
         }
 
@@ -202,7 +195,8 @@ public final class PBBAAppUtils {
      * @param secureToken The secure token for the payment.
      * @param brn         The BRN code for the payment.
      * @param callback    The callback listener for the popup. The popup keeps {@link java.lang.ref.WeakReference} to the callback.
-     * @param requestType For pay {@link RequestType#REQUEST_TO_PAY} and for linking {@link RequestType#REQUEST_TO_LINK}
+     * @param timeoutTS   Timeout value in milliseconds
+     * @param requestType Request type for pay {@link RequestType#REQUEST_TO_PAY}, for Link and Pay {@link RequestType#REQUEST_TO_LINK_AND_PAY} and for linking {@link RequestType#REQUEST_TO_LINK}
      * @see PBBAPopupCallback
      * @see #showPBBAErrorPopup(FragmentActivity, String, String, String, PBBAPopupCallback)
      * @see #dismissPBBAPopup(FragmentActivity)

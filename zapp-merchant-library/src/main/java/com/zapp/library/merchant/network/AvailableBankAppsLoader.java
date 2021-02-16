@@ -55,6 +55,7 @@ public class AvailableBankAppsLoader extends AsyncTaskLoader<PBBABankLogoRespons
      * Create new instance
      *
      * @param context The context to use.
+     * @param filterAvailableBankApps filter available bank apps
      */
     public AvailableBankAppsLoader(@NonNull final Context context, @NonNull final FilterAvailableBankApps filterAvailableBankApps) {
         super(context);

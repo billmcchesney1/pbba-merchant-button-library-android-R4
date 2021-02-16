@@ -26,7 +26,12 @@ public enum RequestType {
     /**
      * Request to pay
      */
-    REQUEST_TO_PAY("RequestToPay");
+    REQUEST_TO_PAY("RequestToPay"),
+
+    /**
+     * Request to link and pay
+     */
+    REQUEST_TO_LINK_AND_PAY("RequestToLinkAndPay");
 
     private final String typeOfRequest;
 

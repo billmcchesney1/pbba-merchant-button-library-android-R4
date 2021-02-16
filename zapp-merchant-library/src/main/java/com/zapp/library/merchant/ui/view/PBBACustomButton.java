@@ -147,7 +147,7 @@ public class PBBACustomButton extends RelativeLayout implements LoaderManager.Lo
     /**
      * Set layout type see {@link PBBACustomButtonType}
      *
-     * @param type
+     * @param type type of PBBACustomButtonType enum to use
      */
     public void setLayoutType(@NonNull final PBBACustomButtonType type) {
         if (type == PBBACustomButtonType.NONE) {

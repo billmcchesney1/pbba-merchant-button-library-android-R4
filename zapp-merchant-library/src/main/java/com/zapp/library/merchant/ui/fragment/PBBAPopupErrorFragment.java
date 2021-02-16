@@ -25,10 +25,6 @@ import android.view.ViewGroup;
 
 import com.zapp.library.merchant.R;
 
-import com.zapp.library.merchant.R;
-import com.zapp.library.merchant.ui.PBBAPopupCallback;
-import com.zapp.library.merchant.ui.view.PBBAButton;
-
 /**
  * Pay by Bank app popup implementation for error popups.
  *

@@ -113,6 +113,7 @@ public final class PBBAPopupFragment extends PBBAPopup {
      * @param secureToken The secure token to use to open the PBBA enabled CFI App.
      * @param brn         The BRN code to display.
      * @param timeoutTS   The timeout in milliseconds
+     * @param requestType   RequestType to use
      * @return The new fragment instance.
      */
     @SuppressWarnings("TypeMayBeWeakened")
